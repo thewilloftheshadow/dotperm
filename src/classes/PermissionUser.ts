@@ -1,0 +1,93 @@
+import { UserOptions, UserPermissions } from "../typings"
+
+export default class PermissionUser {
+    id: string
+    permissions: UserPermissions
+    options: UserOptions
+
+    /**
+     * @param id The user's ID
+     * @param permissions A list of permissions the user has
+     * @param options Additional options
+     */
+    constructor(id: string, permissions: string | string[], options: UserOptions) {
+        this.id = id
+        this.permissions = {}
+        this.options = options
+        this.addPermissions(typeof permissions == "string" ? [permissions] : permissions)
+    }
+
+    /**
+     * Check a permission against the user's permissions
+     * @param permission A string of a permission you want to check (up to 2 subgroups allowed)
+     */
+    public check(permission: string) {
+        const permTiers = permission.split(".")
+        const baseGroup = this.permissions[permTiers[0]]
+        permTiers.shift()
+
+        let result
+
+        switch (permTiers.length) {
+            case 1:
+                result = baseGroup[permTiers[0]]
+                console.debug(baseGroup, permTiers)
+                if (typeof result !== "boolean") result = null
+                if (!result) result = baseGroup["*"]
+                if (!result) result = false
+                break
+
+            case 2:
+                const subGroup = baseGroup[permTiers[0]]
+                if (subGroup === true || subGroup === null) {
+                    result = null
+                    break
+                } else {
+                    result = subGroup[permTiers[0]]
+                    if (typeof result !== "boolean") result = null
+                    if (!result) result = subGroup["*"]
+                    if (!result) result = false
+                }
+        }
+        if(!result) result = false
+        return result
+    }
+
+    /**
+     * Add a permission to a user
+     * @param permissions An array of permissions to add (up to 2 subgroups)
+     */
+    public addPermissions(permInput: string[]) {
+        permInput.forEach((x) => {
+            const split = x.split(".")
+            const baseGroup = split[0]
+            let userPermGroup = this.permissions[baseGroup] || null
+            if (!userPermGroup) {
+                this.permissions[baseGroup] = {}
+                userPermGroup = this.permissions[baseGroup]
+            }
+
+            split.shift()
+
+            switch (split.length) {
+                case 1:
+                    userPermGroup[split[0]] = true
+                    break
+
+                case 2:
+                    let groupTwo = userPermGroup[split[0]] || null
+                    if (!groupTwo) {
+                        userPermGroup[split[0]] = {}
+                        groupTwo = userPermGroup[split[0]]
+                    }
+                    if (typeof groupTwo !== "boolean") {
+                        groupTwo![split[1]] = true
+                    }
+                    break
+
+                default:
+                    throw new Error("Only permissions with two subgroups are supported")
+            }
+        })
+    }
+}

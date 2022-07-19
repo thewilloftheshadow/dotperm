@@ -1,0 +1,25 @@
+{
+  "name": "dotperm",
+  "version": "0.1.0",
+  "description": "A simple package to help you manage dot-based permissions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thewilloftheshadow/dotperm.git"
+  },
+  "keywords": [
+    "permission",
+    "dotperm",
+    "discord",
+    "perms"
+  ],
+  "author": "Shadow",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thewilloftheshadow/dotperm/issues"
+  },
+  "homepage": "https://github.com/thewilloftheshadow/dotperm#readme"
+}
