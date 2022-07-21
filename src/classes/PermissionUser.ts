@@ -24,7 +24,7 @@ export default class PermissionUser {
     public check(permission: string) {
         const permTiers = permission.split(".")
         const baseGroup = this.permissions[permTiers[0]]
-        if(!baseGroup) return false
+        if (!baseGroup) return false
         permTiers.shift()
 
         let result
@@ -50,7 +50,7 @@ export default class PermissionUser {
                     if (!result) result = false
                 }
         }
-        if(!result) result = false
+        if (!result) result = false
         return result
     }
 
@@ -87,7 +87,18 @@ export default class PermissionUser {
                     break
 
                 default:
-                    throw new Error("Only permissions with two subgroups are supported")
+                    let groupD = userPermGroup[split[0]] || null
+                    if (!groupD) {
+                        userPermGroup[split[0]] = {}
+                        groupD = userPermGroup[split[0]]
+                    }
+                    if (typeof groupD !== "boolean") {
+                        groupD![split[1]] = true
+                    }
+                    console.log(
+                        "Only permission groups up to 2 deep are supported, the group has been trimmed"
+                    )
+                    break
             }
         })
     }
