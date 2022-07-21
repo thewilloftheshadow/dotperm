@@ -24,6 +24,7 @@ export default class PermissionUser {
     public check(permission: string) {
         const permTiers = permission.split(".")
         const baseGroup = this.permissions[permTiers[0]]
+        if(!baseGroup) return false
         permTiers.shift()
 
         let result
