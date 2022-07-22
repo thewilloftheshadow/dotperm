@@ -71,6 +71,10 @@ export default class PermissionUser {
             split.shift()
 
             switch (split.length) {
+                case 0:
+                    userPermGroup["*"] = true
+                    break
+
                 case 1:
                     userPermGroup[split[0]] = true
                     break
