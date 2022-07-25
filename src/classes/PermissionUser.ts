@@ -62,7 +62,7 @@ export default class PermissionUser {
 
             case 2:
                 const subGroup = baseGroup[permTiers[0]]
-                if (subGroup === true || subGroup === null) {
+                if (subGroup === true || subGroup === null || !subGroup) {
                     result = null
                     break
                 } else {
