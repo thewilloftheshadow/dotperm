@@ -17,3 +17,5 @@ console.log(
     user.check("one.two"),
     user.check("also.test")
 )
+
+console.log(user.list())

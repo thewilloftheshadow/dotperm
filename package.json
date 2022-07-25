@@ -1,6 +1,6 @@
 {
   "name": "dotperm",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A simple package to help you manage dot-based permissions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,5 +25,8 @@
   "homepage": "https://github.com/thewilloftheshadow/dotperm#readme",
   "files": [
     "dist"
-  ]
+  ],
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
 }

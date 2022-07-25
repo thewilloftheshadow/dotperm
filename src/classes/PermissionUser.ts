@@ -1,4 +1,4 @@
-import { UserOptions, UserPermissions } from "../typings"
+import { UserOptions, UserPermissions, UserPermissionSet } from "../typings"
 
 export default class PermissionUser {
     id: string
@@ -15,6 +15,28 @@ export default class PermissionUser {
         this.permissions = {}
         this.options = options
         this.addPermissions(typeof permissions == "string" ? [permissions] : permissions)
+    }
+
+    /**
+     * List all permissions the user has
+     * @returns An array of permissions the user has
+     */
+    public list() {
+        const returned = []
+        for (const group in this.permissions) {
+            for (const permission in this.permissions[group]) {
+                if (this.permissions[group][permission] === true) {
+                    returned.push(`${group}.${permission}`)
+                } else if (typeof this.permissions[group][permission] === "object") {
+                    for (const subPermission in this.permissions[group][
+                        permission
+                    ] as UserPermissionSet) {
+                        returned.push(`${group}.${permission}.${subPermission}`)
+                    }
+                }
+            }
+        }
+        return returned
     }
 
     /**
