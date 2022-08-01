@@ -9,13 +9,4 @@ const user = new PermissionUser("test", [
     "also.*",
 ])
 
-console.log(JSON.stringify(user, null, 2))
-
-console.log(
-    user.check("thing.three"),
-    user.check("thing.one"),
-    user.check("one.two"),
-    user.check("also.test")
-)
-
-console.log(user.list())
+console.log(user.check("group.find.this"), user.check("group.find.that"))

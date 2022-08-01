@@ -54,7 +54,6 @@ export default class PermissionUser {
         switch (permTiers.length) {
             case 1:
                 result = baseGroup[permTiers[0]]
-                console.debug(baseGroup, permTiers)
                 if (typeof result !== "boolean") result = null
                 if (!result) result = baseGroup["*"]
                 if (!result) result = false
@@ -62,11 +61,11 @@ export default class PermissionUser {
 
             case 2:
                 const subGroup = baseGroup[permTiers[0]]
-                if (subGroup === true || subGroup === null || !subGroup) {
+                if ((typeof subGroup === "boolean" && subGroup === true) || subGroup === null || !subGroup) {
                     result = null
                     break
                 } else {
-                    result = subGroup[permTiers[0]]
+                    result = subGroup[permTiers[1]]
                     if (typeof result !== "boolean") result = null
                     if (!result) result = subGroup["*"]
                     if (!result) result = false
