@@ -1,6 +1,6 @@
 {
   "name": "dotperm",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A simple package to help you manage dot-based permissions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
